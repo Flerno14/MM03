@@ -6,16 +6,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProdutoDAO {
-    // Ajuste USER e PASSWORD conforme seu banco local
     private static final String URL = "jdbc:mysql://localhost:3306/minimercado";
     private static final String USER = "root";
-    private static final String PASSWORD = "";
+    private static final String PASSWORD = "senai";
 
     private Connection getConnection() throws SQLException {
         return DriverManager.getConnection(URL, USER, PASSWORD);
     }
 
-    // Cumpre: Cadastro de produtos
     public void salvar(Produto p) throws SQLException {
         String sql = "INSERT INTO produtos (nome, preco, estoque) VALUES (?, ?, ?)";
         try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -26,7 +24,6 @@ public class ProdutoDAO {
         }
     }
 
-    // Cumpre: Listagem para Relatórios [cite: 75, 76]
     public List<Produto> listarTodos() {
         List<Produto> produtos = new ArrayList<>();
         String sql = "SELECT * FROM produtos";
@@ -45,7 +42,6 @@ public class ProdutoDAO {
         return produtos;
     }
 
-    // Cumpre: Edição e Exclusão [cite: 47]
     public void atualizar(Produto p) throws SQLException {
         String sql = "UPDATE produtos SET nome=?, preco=?, estoque=? WHERE id=?";
         try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {

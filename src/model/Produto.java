@@ -6,10 +6,8 @@ public class Produto {
     private double preco;
     private int estoque;
 
-    // Construtor vazio
     public Produto() {}
 
-    // Construtor completo
     public Produto(int id, String nome, double preco, int estoque) {
         this.id = id;
         this.nome = nome;

@@ -22,11 +22,10 @@ public class SistemaMercadoGUI extends JFrame {
         d = new ProdutoDAO();
 
         setTitle("Mini Mercado (V1)");
-        setSize(900, 500); // tamanho estranho
-        setLayout(null);   // LAYOUT HORRÍVEL DE PROPÓSITO
+        setSize(900, 500);
+        setLayout(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        // ABA "fake" feita na mão (trabalho ruim mesmo)
         JButton btnProd = new JButton("PRODUTOS");
         JButton btnRel = new JButton("RELATÓRIOS");
 
@@ -58,7 +57,6 @@ public class SistemaMercadoGUI extends JFrame {
         atualizar();
     }
 
-    // TELA DE PRODUTOS HORRÍVEL
     private JPanel telaProdutos() {
         JPanel p = new JPanel(null);
         p.setBackground(new Color(225, 235, 255)); // cor nada a ver
@@ -123,10 +121,9 @@ public class SistemaMercadoGUI extends JFrame {
         return p;
     }
 
-    // TELA DE RELATÓRIOS MAIS FEIA AINDA
     private JPanel telaRelatorios() {
         JPanel p = new JPanel(null);
-        p.setBackground(new Color(255, 240, 220)); // cor feia também
+        p.setBackground(new Color(255, 240, 220));
 
         JTextArea area = new JTextArea();
         area.setBounds(20, 60, 820, 320);
