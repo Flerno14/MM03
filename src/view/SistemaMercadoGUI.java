@@ -7,6 +7,8 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
+import java.io.FileWriter;
 import java.util.List;
 
 public class SistemaMercadoGUI extends JFrame {
@@ -135,10 +137,15 @@ public class SistemaMercadoGUI extends JFrame {
 
         JButton r1 = new JButton("Estoque");
         JButton r2 = new JButton("Catálogo");
+        JButton r3 = new JButton("Imprimir (.txt)"); // <-- botão solicitado
 
         r1.setBounds(20, 15, 120, 30);
         r2.setBounds(150, 15, 120, 30);
+        r3.setBounds(280, 15, 150, 30); // <-- posição adicionada
 
+        // --------------------------------------------------------
+        // RELATÓRIO DE ESTOQUE
+        // --------------------------------------------------------
         r1.addActionListener(e -> {
             StringBuilder sb = new StringBuilder();
             sb.append("=== RELATÓRIO ESTOQUE ===\n");
@@ -150,6 +157,9 @@ public class SistemaMercadoGUI extends JFrame {
             area.setText(sb.toString());
         });
 
+        // --------------------------------------------------------
+        // RELATÓRIO CATÁLOGO (somente produtos com estoque > 0)
+        // --------------------------------------------------------
         r2.addActionListener(e -> {
             StringBuilder sb = new StringBuilder();
             sb.append("=== CATÁLOGO ===\n");
@@ -162,12 +172,76 @@ public class SistemaMercadoGUI extends JFrame {
             area.setText(sb.toString());
         });
 
+        r3.addActionListener(e -> {
+            try {
+                // Detecta a pasta Downloads do usuário (Windows)
+                String user = System.getProperty("user.home");
+                File downloads = new File(user + File.separator + "Downloads");
+
+                // Nome fixo do arquivo final
+                File arquivo = new File(downloads, "relatorio_completo.txt");
+
+                StringBuilder sb = new StringBuilder();
+
+                // ---------------------------
+                // RELATÓRIO DE ESTOQUE
+                // ---------------------------
+                sb.append("=== RELATÓRIO DE ESTOQUE ===\n");
+                sb.append(String.format("%-25s | %s\n", "NOME", "QTD"));
+                sb.append("-----------------------------------------\n");
+
+                for (Produto x : d.listarTodos()) {
+                    sb.append(String.format("%-25s | %d\n", x.getNome(), x.getEstoque()));
+                }
+
+                sb.append("\n\n");
+
+                // ---------------------------
+                // CATÁLOGO
+                // ---------------------------
+                sb.append("=== CATÁLOGO ===\n");
+                sb.append(String.format("%-25s | %s\n", "NOME", "PREÇO"));
+                sb.append("-----------------------------------------\n");
+
+                for (Produto x : d.listarTodos()) {
+                    if (x.getEstoque() > 0)
+                        sb.append(String.format("%-25s | R$ %.2f\n", x.getNome(), x.getPreco()));
+                }
+
+                // Salva o arquivo
+                FileWriter fw = new FileWriter(arquivo);
+                fw.write(sb.toString());
+                fw.close();
+
+                JOptionPane.showMessageDialog(
+                        p,
+                        "Relatório completo salvo em Downloads:\n" + arquivo.getAbsolutePath(),
+                        "Sucesso",
+                        JOptionPane.INFORMATION_MESSAGE
+                );
+
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(
+                        p,
+                        "Erro ao salvar arquivo: " + ex.getMessage(),
+                        "Erro",
+                        JOptionPane.ERROR_MESSAGE
+                );
+            }
+        });
+
+
+
+
+
         p.add(r1);
         p.add(r2);
+        p.add(r3); // <-- botão adicionado
         p.add(sp);
 
         return p;
     }
+
 
     private void salvarOuEditar() {
         try {

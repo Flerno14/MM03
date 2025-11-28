@@ -15,7 +15,6 @@ public class Produto {
         this.estoque = estoque;
     }
 
-    // Construtor sem ID (para novos cadastros)
     public Produto(String nome, double preco, int estoque) {
         this.nome = nome;
         this.preco = preco;
