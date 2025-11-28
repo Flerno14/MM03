@@ -174,11 +174,9 @@ public class SistemaMercadoGUI extends JFrame {
 
         r3.addActionListener(e -> {
             try {
-                // Detecta a pasta Downloads do usuário (Windows)
                 String user = System.getProperty("user.home");
                 File downloads = new File(user + File.separator + "Downloads");
 
-                // Nome fixo do arquivo final
                 File arquivo = new File(downloads, "relatorio_completo.txt");
 
                 StringBuilder sb = new StringBuilder();
@@ -208,7 +206,6 @@ public class SistemaMercadoGUI extends JFrame {
                         sb.append(String.format("%-25s | R$ %.2f\n", x.getNome(), x.getPreco()));
                 }
 
-                // Salva o arquivo
                 FileWriter fw = new FileWriter(arquivo);
                 fw.write(sb.toString());
                 fw.close();
@@ -229,10 +226,6 @@ public class SistemaMercadoGUI extends JFrame {
                 );
             }
         });
-
-
-
-
 
         p.add(r1);
         p.add(r2);
